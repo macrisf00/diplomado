@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 use App\Municipio;
 use App\Departamento;
@@ -32,7 +31,8 @@ class municipioController extends Controller
      */
     public function create()
     {
-        //
+        $departamentos = Departamento::orderBy('depa_nomb')->get();
+        return view('municipio.create',compact('departamentos'));
     }
 
     /**
@@ -43,7 +43,14 @@ class municipioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    
+        $municipio = new Municipio;
+        //$flight->name = $request->name
+        $municipio->muni_nomb = $request->muni_nomb;
+        $municipio->depa_codi = $request->depa_codi;
+        $municipio->save();
+        return redirect()->route('municipio.index')->with('status','guardado');
+        
     }
 
     /**
@@ -65,7 +72,10 @@ class municipioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $municipio = Municipio::findOrFail($id);
+        $departamentos = Departamento::all();
+        return view('municipio.edit', compact('municipio','departamentos'));
+    
     }
 
     /**
@@ -77,7 +87,11 @@ class municipioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $municipio = Municipio::findOrFail($id);
+        $municipio->fill($request->all());
+        $municipio->save();
+        return redirect()->route('municipio.index')->with('status','actualizado');
+
     }
 
     /**
@@ -88,6 +102,9 @@ class municipioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $municipio = Municipio::findOrFail($id);
+        $municipio->delete();
+        return redirect()->route('municipio.index')->with('status','eliminado');
+    
     }
 }
