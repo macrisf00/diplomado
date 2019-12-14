@@ -23,8 +23,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
+        //$this->registerPolicies();
 
-        //
+        $this->registerPolicies();//VALIDA SI ES ADMINISTRADOR
+        Gate::define('isAdmin', function($user){
+        return (strtolower($user->type) === 'admin');
+         });
     }
 }

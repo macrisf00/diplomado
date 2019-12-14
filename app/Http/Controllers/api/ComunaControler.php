@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class departamentoController extends Controller
+class ComunaControler extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-    
-    }
     /**
      * Display a listing of the resource.
      *
@@ -18,16 +15,7 @@ class departamentoController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(['codigo'=>1234]);
     }
 
     /**
@@ -48,17 +36,6 @@ class departamentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

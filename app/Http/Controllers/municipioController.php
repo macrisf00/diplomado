@@ -10,6 +10,10 @@ use App\Departamento;
 
 class municipioController extends Controller
 {
+    public function __Construct(){
+        $this->middleware('auth');
+    
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +24,7 @@ class municipioController extends Controller
         $municipios = DB::table('tb_municipio as m')
             ->join('tb_departamento','m.depa_codi','=','tb_departamento.depa_codi')
             ->select('m.muni_codi','m.muni_nomb','m.depa_codi','tb_departamento.depa_nomb')
-            ->get();
+            ->paginate(10);
         return view('municipio.index', compact('municipios'));   
     }
 

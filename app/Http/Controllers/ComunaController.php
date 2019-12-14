@@ -11,6 +11,11 @@ use App\Municipio;
 
 class ComunaController extends Controller
 {
+
+    public function __Construct(){ //validar si esta autenticado
+        $this->middleware('auth')->except('index'); // controlamos operaciones que este autenticada
+    
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +26,7 @@ class ComunaController extends Controller
         $comunas = DB::table('tb_comuna as c')
                     ->join('tb_municipio','c.muni_codi','=','tb_municipio.muni_codi')
                     ->select('c.comu_codi','c.comu_nomb','c.muni_codi','tb_municipio.muni_nomb')
-                    ->get();
+                    ->paginate(10); //pagunacion
         return view('comuna.index', compact('comunas'));
     }
 
@@ -45,6 +50,17 @@ class ComunaController extends Controller
      */
     public function store(Request $request)
     {
+     //requerimiento de datos
+
+        request()->validate([
+            'comu_nomb'=>'required|min:5',
+            'muni_codi'=>'required'
+
+        ]);
+
+        
+
+
         //
         $comuna = new Comuna;
         //$flight->name = $request->name
@@ -106,4 +122,7 @@ class ComunaController extends Controller
         $comuna->delete();
         return redirect()->route('comuna.index')->with('status','eliminado');
     }
+
+    
+        
 }
